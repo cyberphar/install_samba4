@@ -42,7 +42,7 @@ search empiredesalex.local
 nameserver 127.0.0.1
 ```
 Puis on relance le service:  
-`sudo systemctl restart samba-ad-dc`  
+```sudo systemctl restart samba-ad-dc```  
 
 On vérifie les processus lancés par samba:  
 ```sudo samba-tool processes```
@@ -60,9 +60,9 @@ sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPI
 ```samba-tool dns add ubndc01 empiredesalex.local ubndc01 A 192.0.2.21 -U administrator```  
 ## Test Kerberos ##  
 Demande d'un ticket:  
-`kinit administrator@EXAMPLE.COM`  
+```kinit administrator@EXAMPLE.COM```  
 Vérification de la liste:  
-`klist`
+```klist```  
 ## Test SMB ##  
 Lister les partages définis localement sur le DC :  
 ```smbclient -L localhost```
