@@ -17,14 +17,7 @@ Changer le nom de la machine :
 
 Installer samba4:  
 ```
-sudo apt install acl attr autoconf bind9utils bison build-essential debhelper dnsutils libgnutls30 \
-docbook-xml docbook-xsl flex gdb libjansson-dev smbldap-tools libacl1-dev libaio-dev libarchive-dev \
-libattr1-dev libblkid-dev libbsd-dev libcap-dev libcups2-dev libgnutls28-dev libgpgme-dev libjson-perl \
-libldap2-dev libncurses5-dev libpam0g-dev libparse-yapp-perl libpopt-dev libreadline-dev nettle-dev \
-perl perl-modules-5.28 pkg-config python-all-dev python-dev \
-python3-dnspython python-gpg python3-gpg python3-markdown python3-dev xsltproc xattr \
-zlib1g-dev liblmdb-dev lmdb-utils libsystemd-dev python3-cryptography gnutls-bin cifs-utils \
-samba krb5-user smbclient winbind
+sudo apt install acl attr autoconf bind9utils bison build-essential debhelper dnsutils libgnutls30 docbook-xml docbook-xsl flex gdb libjansson-dev smbldap-tools libacl1-dev libaio-dev libarchive-dev libattr1-dev libblkid-dev libbsd-dev libcap-dev libcups2-dev libgnutls28-dev libgpgme-dev libjson-perl libldap2-dev libncurses5-dev libpam0g-dev libparse-yapp-perl libpopt-dev libreadline-dev nettle-dev perl perl-modules-5.28 pkg-config python-all-dev python-dev python3-dnspython python-gpg python3-gpg python3-markdown python3-dev xsltproc xattr zlib1g-dev liblmdb-dev lmdb-utils libsystemd-dev python3-cryptography gnutls-bin cifs-utils samba krb5-user smbclient winbind
 ```  
 Installation en mode interactive:  
 
@@ -35,8 +28,10 @@ sudo samba-tool domain provision --use-rfc2307 --realm=EMPIREDESALEX.LOCAL --dom
 
 Arrêt des services et redémarrage du post:  
 
-```sudo systemctl disable smbd nmbd && sudo systemctl mask smbd nmbd \
-sudo systemctl unmask samba-ad-dc && sudo systemctl enable samba-ad-dc \
+```
+sudo systemctl disable smbd nmbd && sudo systemctl mask smbd nmbd  
+sudo systemctl unmask samba-ad-dc  
+sudo systemctl enable samba-ad-dc  
 sudo reboot
 ```
 ## Vérification ##  
