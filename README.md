@@ -24,6 +24,7 @@ Installation en mode interactive:
 ```
 sudo rm -f /etc/samba/smb.conf  
 sudo samba-tool domain provision --use-rfc2307 --realm=EMPIREDESALEX.LOCAL --domain=EMPIREDESALEX --server-role=dc --dns-backend=SAMBA_INTERNAL
+sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL
 ```  
 
 Arrêt des services et redémarrage du post:  
@@ -69,7 +70,7 @@ samba-tool dns add ubndc01 empiredesalex.local ubndc01 A 192.0.2.21 -U administr
 ## Test Kerberos ##  
 Demande d'un ticket:  
 ```
-kinit administrator@EMPIREDESALEX.COM
+kinit administrator@EMPIREDESALEX.LOCAL
 ```  
 Vérification de la liste:  
 ```
@@ -89,7 +90,8 @@ samba-tool drs showrepl
 ## Pour une réinstallation ##  
 ```
 sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
-rm -rf /var/lib/samba/private/*
+sudo rm -rf /var/lib/samba/private/*
+sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
 ```
 
 ## Source ##  
