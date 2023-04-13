@@ -41,6 +41,9 @@ Le fichier /etc/resolv.conf devrait contenir
 search empiredesalex.local  
 nameserver 127.0.0.1
 ```
+Puis on relance le service:  
+`sudo systemctl restart samba-ad-dc`  
+
 On vérifie les processus lancés par samba:  
 ```sudo samba-tool processes```
 
