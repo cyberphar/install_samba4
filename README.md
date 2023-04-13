@@ -45,7 +45,9 @@ Puis on relance le service:
 ```sudo systemctl restart samba-ad-dc```  
 
 On vérifie les processus lancés par samba:  
-```sudo samba-tool processes```
+```
+sudo samba-tool processes
+```
 
 ## Initialisation ##  
 ```
@@ -53,22 +55,42 @@ sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
 sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL
 ``` 
 ## Rejoindre le domaine ##  
-```sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL```  
+```
+sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL
+```  
 ## Changer le mot de passe admin ##  
-```sudo samba-tool user setpassword administrator```  
+```
+sudo samba-tool user setpassword administrator
+```  
 ## Ajouter un enregistrement DNS ##  
-```samba-tool dns add ubndc01 empiredesalex.local ubndc01 A 192.0.2.21 -U administrator```  
+```
+samba-tool dns add ubndc01 empiredesalex.local ubndc01 A 192.0.2.21 -U administrator
+```  
 ## Test Kerberos ##  
 Demande d'un ticket:  
-```kinit administrator@EXAMPLE.COM```  
+```
+kinit administrator@EMPIREDESALEX.COM
+```  
 Vérification de la liste:  
-```klist```  
+```
+klist
+```  
 ## Test SMB ##  
 Lister les partages définis localement sur le DC :  
-```smbclient -L localhost```
+```
+smbclient -L localhost
+```
 
 ## Voir l'état de la synchronisation ##  
-```samba-tool drs showrepl```  
+```
+samba-tool drs showrepl
+```  
+
+## Pour une réinstallation ##  
+```
+sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
+rm -rf /var/lib/samba/private/*
+```
 
 ## Source ##  
 > https://doc.ubuntu-fr.org/samba-active-directory 
