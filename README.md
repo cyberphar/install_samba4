@@ -12,7 +12,7 @@ Spécifier des serveurs ntp dans /etc/ntp.conf
 ```server 0.ubuntu.pool.ntp.org ```  
 
 Changer le nom de la machine :  
-```hostnamectl set-hostname ```  
+```hostnamectl set-hostname ubndc01```  
 
 ## Installation ##  
 
@@ -33,11 +33,11 @@ Installation en mode interactive:
 
 Remplir les paramètres demandés:  
 
-Realm [EXAMPLE.COM]: EMPIREDESALEX.COM  
+Realm [EXAMPLE.COM]: EMPIREDESALEX.LOCAL  
 Domain [EXAMPLE]: EMPIREDESALEX  
 Server Role (dc, member, standalone) [dc]:  
 DNS backend (SAMBA_INTERNAL, BIND9_FLATFILE, BIND9_DLZ, NONE) [SAMBA_INTERNAL]:  
-DNS forwarder IP address (write 'none' to disable forwarding) [192.0.2.1]:  
+DNS forwarder IP address (write 'none' to disable forwarding) [192.0.2.1]: none  
 Administrator password:  
 Retype password:  
 
@@ -47,6 +47,38 @@ Arrêt des services et redémarrage du post:
 sudo systemctl unmask samba-ad-dc && sudo systemctl enable samba-ad-dc \
 sudo reboot
 ```
+## Vérification ##  
+Avant de démarrer Samba AD DC, il est important de vérifier la bonne configuration du DNS.
+Le fichier /etc/resolv.conf devrait contenir
+```
+search empiredesalex.local  
+nameserver 127.0.0.1
+```
+On vérifie les processus lancés par samba:  
+```sudo samba-tool processes```
 
+## Initialisation ##  
+```
+sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old  
+sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL
+``` 
 ## Rejoindre le domaine ##  
-```sudo samba-tool domain join empiredesalex.com DC -U administrator --realm=EMPIREDESALEX.COM```
+```sudo samba-tool domain join empiredesalex.local DC -U administrator --realm=EMPIREDESALEX.LOCAL```  
+## Changer le mot de passe admin ##  
+```sudo samba-tool user setpassword administrator```  
+## Ajouter un enregistrement DNS ##  
+```samba-tool dns add ubndc01 empiredesalex.local ubndc01 A 192.0.2.21 -U administrator```  
+## Test Kerberos ##  
+Demande d'un ticket:  
+`kinit administrator@EXAMPLE.COM`  
+Vérification de la liste:  
+`klist`
+## Test SMB ##  
+Lister les partages définis localement sur le DC :  
+```smbclient -L localhost```
+
+## Voir l'état de la synchronisation ##  
+```samba-tool drs showrepl```  
+
+## Source ##  
+> https://doc.ubuntu-fr.org/samba-active-directory 
