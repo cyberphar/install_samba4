@@ -91,7 +91,6 @@ samba-tool drs showrepl
 ```
 sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
 sudo rm -rf /var/lib/samba/private/*
-sudo mv --backup=t /etc/samba/smb.conf /etc/samba/smb.conf.old
 ```
 
 ## Source ##  
